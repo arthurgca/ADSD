@@ -15,18 +15,19 @@ class Escalonador(object):
         self.tempo_espera = tempo_espera
         self.atendidos = 0
 
-    def wash(self, fregues):
+    def atende(self, fregues):
         yield self.env.timeout(TEMPO_ESPERA)
         self.atendidos += 1
-        print self.atendidos
+        print "Fregueses atendidos %d" % self.atendidos
 
 
 def fregues(env, nome, ec):
     print('%s entra na fila em %.2f.' % (nome, env.now))
+
     with ec.escalonador.request() as request:
         yield request
         print('%s comeca servico %.2f.' % (nome, env.now))
-        yield env.process(ec.wash(nome))
+        yield env.process(ec.atende(nome))
         print('%s termina servico em %.2f.' % (nome, env.now))
 
 
@@ -36,14 +37,20 @@ def setup(env, tempo_espera, exponencial_lamdba):
     i = 0
 
     while True:
+        #Para uniforme: random.uniform(a, b)
+        #Para normal: random.normalvariate(mu, sigma)
         t = random.expovariate(exponencial_lamdba)
+
+        #Espera tempo da distribuicao
         yield env.timeout(t)
+
+        #Cria novo fregues e adiciona na fila
         i += 1
         env.process(fregues(env, 'Fregues %d' % i, escalonador))
 
-# Setup and start the simulation
+#Cria tudo
 print('Escalonador')
-random.seed(RANDOM_SEED)  # This helps reproducing the results
+random.seed(RANDOM_SEED) 
 env = simpy.Environment()
 env.process(setup(env, TEMPO_ESPERA, EXPONENCIAL_LAMBDA))
 env.run(until=TEMPO_SIM)
