@@ -26,7 +26,7 @@ class Escalonador(object):
         #GUARDA QUANTOS USUARIOS EM ESPERA FICARAM NAQUELE PASSO
         #GUARDA QUANTOS FORAM ATENDIDOS
         #GUARDA OS TEMPOS DE ATENDIMENTO FAZENDO A DIFERENCA ENTRE ENTRADA E TEMPO ATUAL
-        ESTATISTICAS["EM_ESPERA"].append(len(ESTATISTICAS) - self.atendidos)
+        ESTATISTICAS["EM_ESPERA"].append(ESTATISTICAS["quantidade_recebidos"] - self.atendidos)
         ESTATISTICAS["quantidade_atendidos"] = self.atendidos
         ESTATISTICAS["TEMPOS_ATENDIMENTOS"].append(self.env.now - ESTATISTICAS[fregues]["entrada"])
 
