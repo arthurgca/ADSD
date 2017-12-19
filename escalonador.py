@@ -117,5 +117,5 @@ for repeticao in range(0,NUM_REPETICOES):
     print "Duracao da Simulacao: %d minutos" % TEMPO_SIM
     print "Requisicoes Recebidas: %d fregueses recebidos" % ESTATISTICAS["quantidade_recebidos"]
     print "Requisicoes Atendidas: %d fregueses atendidos" % ESTATISTICAS["quantidade_atendidos"]
-    print "Tempo medio de atendimento: %.2f minutos" % (sum(ESTATISTICAS["TEMPOS_ATENDIMENTOS"])  / float(len(ESTATISTICAS["TEMPOS_ATENDIMENTOS"])))
+    print "Tempo medio de espera para atendimento: %.2f minutos" % (sum(ESTATISTICAS["TEMPOS_ATENDIMENTOS"])  / float(len(ESTATISTICAS["TEMPOS_ATENDIMENTOS"])))
     print "Quantidade media de elementos em espera: %.2f fregueses" % (sum(ESTATISTICAS["EM_ESPERA"])  / float(len(ESTATISTICAS["EM_ESPERA"])))
